@@ -1,7 +1,12 @@
 # NotiFyre
+
+It's lit :fire:
+
 Notify when a terminal task is done
 
-[![Image could not be displayed](thumbnail.png)](https://drive.google.com/open?id=0B5iU6cWw36rObk9tNDEwNmhjTzA)
+![Image could not be displayed](thumbnail.png)
+
+<!---(https://drive.google.com/open?id=0B5iU6cWw36rObk9tNDEwNmhjTzA) --->
 
 Video speed up x2 in the [video](notifyre.mp4)
 
@@ -45,6 +50,6 @@ Note:  The notifications appear in a queue, and cannot be implemented parallely.
 
 Alternatively, you could force-kill notifications when the next one is ready by adding this line at the top of `notif()` - `killall notify-osd` but the results aren't consistent. So yeah, one at a time.
 
-I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals.
+I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals.ntfy wasn't consistent always, so made this.
 
 Any suggestions? Make an issue about it.
