@@ -8,7 +8,7 @@ Notify when a terminal task is done
 
 <!---(https://drive.google.com/open?id=0B5iU6cWw36rObk9tNDEwNmhjTzA) --->
 
-Video speed up x2 in the [video](notifyre.mp4)
+Video speed up x2 in the [video](https://drive.google.com/open?id=0B5iU6cWw36rObk9tNDEwNmhjTzA)
 
 install **notify-send** first : `sudo apt-get install notify-osd`
 
@@ -18,8 +18,8 @@ Now you need to configure your terminal config file accordingly :`sudo subl ~/.b
 Add these lines there :
 
 <pre style="background: rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); padding: 5px 10px;">
-source ~/.notifyre.sh
-source ~/.bash-preexec.sh # as close to end as possible</pre>
+source ~/notifyre.sh
+source ~/bash-preexec.sh # as close to end as possible</pre>
 
 These 2 lines should be as close to the end of the file as possible.
 
@@ -50,7 +50,7 @@ Note:  The notifications appear in a queue, and cannot be implemented parallely.
 
 Alternatively, you could force-kill notifications when the next one is ready by adding this line at the top of `notif()` - `killall notify-osd` but the results aren't consistent. So yeah, one at a time.
 
-# Why this 
+# Why this
 I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals. [ntfy](https://github.com/dschep/ntfy) wasn't consistent always, so made this.
 
 Any suggestions? Make an issue about it.
