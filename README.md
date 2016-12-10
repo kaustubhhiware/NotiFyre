@@ -10,7 +10,7 @@ Notify when a terminal task is done
 
 Video speed up x2 in the [video](https://drive.google.com/open?id=0B5iU6cWw36rObk9tNDEwNmhjTzA)
 
-install **notify-send** first : `sudo apt-get install notify-osd`
+install dependencies first : `sudo apt-get install notify-osd pulseaudio-utils libnotify-bin`
 
 Place both the .sh file and the image in your home folder.
 Now you need to configure your terminal config file accordingly :`sudo subl ~/.bashrc `
