@@ -12,6 +12,8 @@ Video speed up x2 in the [video](https://drive.google.com/open?id=0B5iU6cWw36rOb
 
 install dependencies first : `sudo apt-get install notify-osd pulseaudio-utils libnotify-bin`
 
+(Generally preinstalled in most working systems.)
+
 Place both the .sh file and the image in your home folder.
 Now you need to configure your terminal config file accordingly :`sudo subl ~/.bashrc `
 
@@ -52,5 +54,12 @@ Alternatively, you could force-kill notifications when the next one is ready by 
 
 # Why this
 I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals. [ntfy](https://github.com/dschep/ntfy) wasn't consistent always, so made this.
+
+# Not working/ Message not displayed
+check if notify-osd is working with this - `notify-send "hi"`
+
+If no message pops up, it means notify-osd has stopped working. Try this - `sudo apt-get --reinstall install libnotify-bin notify-osd` and then try testing.
+
+For further customization, visit this [link](http://ubuntuhandbook.org/index.php/2014/04/customize-on-screen-notification-ubuntu-1404/)
 
 Any suggestions? Make an issue about it.
