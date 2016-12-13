@@ -12,7 +12,7 @@ Video speed up x2 in the [video](https://drive.google.com/open?id=0B5iU6cWw36rOb
 
 install dependencies first : `sudo apt-get install notify-osd pulseaudio-utils libnotify-bin`
 
-(Generally preinstalled in most working systems.)
+(Generally preinstalled in most working systems.Works perfectly on a fresh install of ubutnu 16.04)
 
 Place both the .sh file and the image in your home folder.
 Now you need to configure your terminal config file accordingly :`sudo subl ~/.bashrc `
