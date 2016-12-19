@@ -23,7 +23,9 @@ Add these lines there :
 source ~/notifyre.sh
 source ~/bash-preexec.sh # as close to end as possible</pre>
 
-These 2 lines should be as close to the end of the file as possible.
+These 2 lines should be as close to the end of the file
+as possible. If you do not want to run this for each
+command, then add only the first line.
 
 The second file is written by Ryan Caloras and the source for that could be found [here](https://github.com/rcaloras/bash-preexec).
 * zsh configuration may differ(?)
@@ -33,7 +35,7 @@ The second file is written by Ryan Caloras and the source for that could be foun
 The changes made will be reflected in a new terminal.
 * Alternatively, you use in the same terminal , `source ~/.bashrc` and then proceed.
 
-Each command should work with the notifications, if it fails, a workaround could be - `notifyre sleep 2`
+Each command should work with the notifications, if it fails, a workaround could be - `notifyre sleep 2` or simply `nf sleep 2`
 
 # Configure
 
@@ -46,7 +48,13 @@ The above line in notifyre.sh can be changed to your convenience.
 
 * ` "Terminal process" ` is the title of the notification.
 
-* ` -t 2000` means the notification lasts for 2000 milliseconds.
+* `̶ ̶t̶ ̶2̶0̶0̶0̶`̶ ̶m̶e̶a̶n̶s̶ ̶t̶h̶e̶ ̶n̶o̶t̶i̶f̶i̶c̶a̶t̶i̶o̶n̶ ̶l̶a̶s̶t̶
+s̶ ̶f̶o̶r̶ ̶2̶0̶0̶0̶ ̶m̶i̶l̶l̶i̶s̶e̶c̶o̶n̶d̶s̶.[An incorrect design decision is a bug](http://askubuntu.com/questions/110969/notify-send-ignores-timeout)
+
+* Provide your own notification tone by editing this line.
+`ALERT=/usr/share/sounds/ubuntu/notifications/Slick.ogg`
+
+
 
 Note:  The notifications appear in a queue, and cannot be implemented parallely. (Known bug in notify-send).
 
@@ -54,6 +62,8 @@ Alternatively, you could force-kill notifications when the next one is ready by 
 
 # Why this
 I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals. [ntfy](https://github.com/dschep/ntfy) wasn't consistent always, so made this.
+
+Tested on fresh install of Ubuntu 16.04, and on Arch Linux. Ubuntu 14 may require [Slick.ogg](Slick.ogg) whose path must be changed before usage.
 
 # Not working/ Message not displayed
 check if notify-osd is working with this - `notify-send "hi"`
