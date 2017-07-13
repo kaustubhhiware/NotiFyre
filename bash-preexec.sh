@@ -11,7 +11,7 @@
 # Author: Ryan Caloras (ryan@bashhub.com)
 # Forked from Original Author: Glyph Lefkowitz
 #
-# V0.3.1
+# V0.3.3
 #
 
 # General Usage:
@@ -43,10 +43,11 @@ __bp_imported="defined"
 # Should be available to each precmd and preexec
 # functions, should they want it.
 __bp_last_ret_value="$?"
+__bp_last_argument_prev_command="$_"
 
 # Command to set our preexec trap. It's invoked once via
 # PROMPT_COMMAND and then removed.
-__bp_trap_install_string="trap '__bp_preexec_invoke_exec' DEBUG;"
+__bp_trap_install_string="trap '__bp_preexec_invoke_exec \"\$_\"' DEBUG;"
 
 # Remove ignorespace and or replace ignoreboth from HISTCONTROL
 # so we can accurately invoke preexec with a command from our
@@ -90,14 +91,14 @@ __bp_precmd_invoke_cmd() {
     # Save the returned value from our last command
     __bp_last_ret_value="$?"
 
-    # For every function defined in our function array. Invoke it.
+    # Invoke every function defined in our function array.
     local precmd_function
     for precmd_function in "${precmd_functions[@]}"; do
 
         # Only execute this function if it actually exists.
         # Test existence of functions with: declare -[Ff]
         if type -t "$precmd_function" 1>/dev/null; then
-            __bp_set_ret_value $__bp_last_ret_value
+            __bp_set_ret_value "$__bp_last_ret_value" "$__bp_last_argument_prev_command"
             $precmd_function
         fi
     done
@@ -136,6 +137,11 @@ __bp_in_prompt_command() {
 # environment to attempt to detect if the current command is being invoked
 # interactively, and invoke 'preexec' if so.
 __bp_preexec_invoke_exec() {
+
+
+    # Save the contents of $_ so that it can be restored later on.
+    # https://stackoverflow.com/questions/40944532/bash-preserve-in-a-debug-trap#40944702
+    __bp_last_argument_prev_command="$1"
 
     # Checks if the file descriptor is not standard out (i.e. '1')
     # __bp_delay_install checks if we're in test. Needed for bats to run.
@@ -183,8 +189,10 @@ __bp_preexec_invoke_exec() {
     # the command is in fact interactive and we should invoke the user's
     # preexec functions.
 
-    # For every function defined in our function array. Invoke it.
+    # Invoke every function defined in our function array.
     local preexec_function
+    local preexec_function_ret_value
+    local preexec_ret_value=0
     for preexec_function in "${preexec_functions[@]}"; do
 
         # Only execute each function if it actually exists.
@@ -192,8 +200,20 @@ __bp_preexec_invoke_exec() {
         if type -t "$preexec_function" 1>/dev/null; then
             __bp_set_ret_value $__bp_last_ret_value
             $preexec_function "$this_command"
+            preexec_function_ret_value="$?"
+            if [[ "$preexec_function_ret_value" != 0 ]]; then
+                preexec_ret_value="$preexec_function_ret_value"
+            fi
         fi
     done
+
+    # Restore the last argument of the last executed command, and set the return
+    # value of the DEBUG trap to be the return code of the last preexec function
+    # to return an error.
+    # If `extdebug` is enabled a non-zero return value from any preexec function
+    # will cause the user's command not to execute.
+    # Run `shopt -s extdebug` to enable
+    __bp_set_ret_value "$preexec_ret_value" "$__bp_last_argument_prev_command"
 }
 
 # Returns PROMPT_COMMAND with a semicolon appended
@@ -252,8 +272,8 @@ __bp_install() {
 
     # Install our hooks in PROMPT_COMMAND to allow our trap to know when we've
     # actually entered something.
-    PROMPT_COMMAND="__bp_precmd_invoke_cmd; ${existing_prompt_command} __bp_interactive_mode;"
-    trap '__bp_preexec_invoke_exec' DEBUG;
+    PROMPT_COMMAND="__bp_precmd_invoke_cmd; ${existing_prompt_command} __bp_interactive_mode"
+    eval "$__bp_trap_install_string"
 
     # Add two functions to our arrays for convenience
     # of definition.
