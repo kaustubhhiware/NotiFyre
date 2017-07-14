@@ -8,10 +8,15 @@ function notifyre -d 'daemon function to provide notifications'
     set -x timeout 1
     set -x ring_timeout 2
     set -x ALERT /usr/share/sounds/ubuntu/notifications/Slick.ogg
+    set -x ICON utilities-terminal
+    if test $status # if last process did not exit properly, show error image
+      set ICON dialog-error
+    end
+
     if test $CMD_DURATION
         if test $CMD_DURATION -gt (math "1000 * $timeout") # time set for notification
             set secs (math "$CMD_DURATION / 1000")
-            command notify-send "Terminal in "(prompt_pwd) "$history[1] completed in $secs seconds"  -i utilities-terminal -t 2
+            command notify-send "Terminal in "(prompt_pwd) "$history[1] completed in $secs seconds"  -i $ICON -t 2
         end
 
         if test $CMD_DURATION -gt (math "1000 * $ring_timeout") # time set for ring
