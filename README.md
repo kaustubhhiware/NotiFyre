@@ -12,111 +12,158 @@ Install dependencies first :
 
     sudo apt-get install notify-osd pulseaudio-utils libnotify-bin
 
-The above dependencies are generally preinstalled in most working systems. Works perfect on a fresh install of ubuntu 16.04. The following steps will differ according to the shell you use. Tested for bash, zsh and fish shell.
+**Note:** The above dependencies are generally installed on most systems.
 
-## Bash / zsh shell
+Notifyre has been tested on a fresh install of Ubuntu 16.04 running bash, zsh or
+fish. If you have managed to port this script to another shell or another OS,
+please open a pull request with the instructions for the same and we will update
+the README!
 
-* Place both the .sh files, `notifyre.sh` & `bash-preexec.sh` in your home folder.
+## Bash / ZSH
+
+### Setup
+
+* Place `notifyre.sh` & `bash-preexec.sh` in your home folder
+
+    ```sh
+    git clone https://github.com/kaustubhhiware/NotiFyre.git
+    cd NotiFyre
+    cp notifyre.sh bash-preexec.sh ~
+    ```
+
+* :zap: Lightning fast alternative: Pull only these two files from GitHub!
+
+    ```
+    curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/notifyre.sh -o ~/notifyre.sh
+    curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o ~/bash-preexec.sh
+    ```
+
+ 
+ * Add the following lines to the end of `~/.bashrc` or `~/.zshrc`:
+
+    ```sh
+    # as close to the end as possible
+    source ~/notifyre.sh
+    source ~/bash-preexec.sh
+    ```
+
+    **Note:** These 2 lines should be added as close to the end of the file as possible.
+
+* If you do not want to be notified for each command, then add this to the end of your rc file:
+
+    ```sh
+    source ~/notifyre.sh
+    ```
+
+    To get a notification for a command, you need to run it as `nf <command>`
+
+### Configuration
+
+```sh
+SOUND=1
+SOUND_MIN=10
+ALERT=/usr/share/sounds/ubuntu/notifications/Slick.ogg
+MIN_INTERVAL=4
 ```
-git clone https://github.com/kaustubhhiware/NotiFyre.git
-cd NotiFyre
-cp notifyre.sh bash-preexec.sh ~
-```
 
-* :zap: Lightning fast alternative:
+There are four configurable options in NotiFyre:
 
- ```
- # Pull the files from Github
- curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/notifyre.sh -o ~/notifyre.sh
+1. `SOUND`
 
- curl https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh -o ~/bash-preexec.sh
+    **Options:** 0 or 1
 
- ```
+    **Utility:** SOUND=1 will play an alert sound for each notification that
+    takes more time than `SOUND_MIN` seconds. This value is a boolean.
 
-Now you need to edit your terminal config to start using NotiFyre : `sudo nano ~/.bashrc `
+2. `SOUND_MIN`
 
-Add the following lines there :
+    **Valid values:** 1, 2, 3 ...
 
-<pre style="background: rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); padding: 5px 10px;">
-source ~/notifyre.sh
-source ~/bash-preexec.sh # as close to end as possible</pre>
+    **Utility:** Let's you configure the minimum amount of time a command must
+    take for it to trigger a sound notification. (If `SOUND=0`, then no sound
+    notification will be played) This value is in seconds.
 
-These 2 lines should be added as close to the end of the file as possible.
+3. `ALERT`
 
-* If you do not want to be notified for each command, then only the first line is to be added. In this case, get notified using `nf command`
+    **Options:** Path to a sound file 
 
-The second file is written by Ryan Caloras and the source for that could be found [here](https://github.com/rcaloras/bash-preexec).
+    **Utility:** The sound file will be played whenever `SOUND=1`
+    and a command has taken more time than `SOUND_MIN` seconds
+
+4. `MIN_INTERVAL`
+
+
+    **Options:** 1, 2, 3, ...
+
+    **Utility:** An option to configure the minimum amount of time that a
+    command must take in order to trigger a notification. This value is in
+    seconds.
 
 ## Fish shell
 
+### Setup
+
 * Place the *prompt_pwd.fish*, _notifyre.fish_ and _nf.fish_ in  your `~/.config/fish/functions/` folder.
-```
-git clone https://github.com/kaustubhhiware/NotiFyre.git
-cd NotiFyre
-cp prompt_pwd.fish notifyre.fish nf.fish ~/.config/fish/functions/
-```
+  ```
+  git clone https://github.com/kaustubhhiware/NotiFyre.git
+  cd NotiFyre
+  cp prompt_pwd.fish notifyre.fish nf.fish ~/.config/fish/functions/
+  ```
 
 * :zap: Lightning fast alternative:
 
- ```
- # Pull the files from Github
- curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/prompt_pwd.fish -o ~/.config/fish/functions/prompt_pwd.fish
- curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/notifyre.fish -o ~/.config/fish/functions/notifyre.fish
- curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/nf.fish -o ~/.config/fish/functions/nf.fish
- ```
-### Usage
+   ```sh
+   # Pull the files from Github
+   curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/prompt_pwd.fish -o ~/.config/fish/functions/prompt_pwd.fish
+   curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/notifyre.fish -o ~/.config/fish/functions/notifyre.fish
+   curl https://raw.githubusercontent.com/kaustubhhiware/NotiFyre/master/nf.fish -o ~/.config/fish/functions/nf.fish
+   ```
 
 * To be notified for each process, add this to your `functions/fish_prompt.fish`
 file just before the end :
 
- <pre style="background: rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); padding: 5px 10px;">function fish_prompt
-    ...
+  ```sh
+   function fish_prompt
+      ...
 
-    eval (notifyre)  # at the very end
- end</pre>
-
- This method works pretty well with my **bobthefish** theme and no theme as
-well. Let me know if it doesn't work out for you.
+      eval (notifyre)  # at the very end
+   end
+  ```
+   This method works pretty well with my **bobthefish** theme and no theme as
+   well. Let me know if it doesn't work out for you.
 
 
 * If you want to be notified only for select commands, you do
 not need to modify the `fish_prompt.fish` file.
 
- Run with `nf command`
+   Run with `nf command`
 
- [This might take slightly more time than the process itself to complete execution.]
+   [This might take slightly more time than the process itself to complete
+   execution.]
 
-You can learn to write your own functions in fish with [this](https://fishshell.com/docs/current/tutorial.html) as a starting point. The working files can be found [in my
-  dotfiles](https://github.com/kaustubhhiware/dotfiles/tree/master/fish).
+You can learn to write your own functions in fish with
+[this](https://fishshell.com/docs/current/tutorial.html) as a starting point.
+The working files can be found [in my
+dotfiles](https://github.com/kaustubhhiware/dotfiles/tree/master/fish).
 
-## Configure
+### Configuration
 
-<pre style="background: rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); padding: 5px 10px;">
-[ $(($(date +%s) - start)) -le 0 ] || notify-send "Terminal process" "$(echo $@) completed in $(($(date +%s) - start)) seconds" -i utilities-terminal -t 2000</pre>
+```sh
+set -x timeout 1
+set -x ring_timeout 2
+set -x ALERT /usr/share/sounds/ubuntu/notifications/Slick.ogg
+```
+There are three available options:
 
-The above line in notifyre.sh can be changed to your convenience.
+1. `timeout` : Same as option `MIN_INTERVAL` in the Bash / ZSH section above
+2. `ring_timeout` : Same as option `SOUND_MIN` in the Bash / ZSH section above
+3. `ALERT` : Same as option `ALERT` in the Bash / ZSH Section above
 
-* `-le 0`  notifies for commands which are completed in more than 0 seconds. Can be changed to 2, 3 seconds.
+Note: The notifications appear in a queue, and cannot be implemented parallely
+(known bug in notify-send)
 
-* ` "Terminal process" ` is the title of the notification.
+# Why?
 
-* `-i utilities-terminal` defines the icon to be used. Specify your own icon with `-i /path/to/img`. An alternate image has been provided as _terminal.png_
-
-* `̶ ̶t̶ ̶2̶0̶0̶0̶`̶ ̶m̶e̶a̶n̶s̶ ̶t̶h̶e̶ ̶n̶o̶t̶i̶f̶i̶c̶a̶t̶i̶o̶n̶ ̶l̶a̶s̶t̶
-s̶ ̶f̶o̶r̶ ̶2̶0̶0̶0̶ ̶m̶i̶l̶l̶i̶s̶e̶c̶o̶n̶d̶s̶.[An incorrect design decision is a bug](http://askubuntu.com/questions/110969/notify-send-ignores-timeout)
-
-* Provide your own notification tone by editing this line.
-`ALERT=/usr/share/sounds/ubuntu/notifications/Slick.ogg`
-
-
-
-Note:  The notifications appear in a queue, and cannot be implemented parallely.
- (Known bug in notify-send).
-
-Alternatively, you could force-kill notifications when the next one is ready by
-adding this line at the top of `notif()` - `killall notify-osd` but the results aren't consistent. So yeah, one at a time.
-
-# Why this
 I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals. [ntfy](https://github.com/dschep/ntfy) wasn't consistent always, so made this.
 
 Tested on fresh install of Ubuntu 16.04, and on Arch Linux. Ubuntu 14 may require [Slick.ogg](Slick.ogg) whose path must be changed before usage.
@@ -131,6 +178,10 @@ If no message pops up, it means notify-osd has stopped working. Reinstall some d
 For further customizations, visit this [link](http://ubuntuhandbook.org/index.php/2014/04/customize-on-screen-notification-ubuntu-1404/)
 
 Have a suggestion? Make an issue about it.
+
+## Acknowledgements
+
+- [Ryan Caloras](https://github.com/rcaloras) for `bash-preexec.sh` [here](https://github.com/rcaloras/bash-preexec).
 
 # License
 
