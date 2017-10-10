@@ -37,9 +37,15 @@ notif_timer() {
   end=$(date +%s)
   elapsed=$((end - start))
 
+  if [[ "$RETVAL" -ne 0 ]]; then
+    status="successfully"
+  else
+    status="unsuccessfully"
+  fi
+
   if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
     notify-send "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
-      "completed $commandx in $elapsed seconds" \
+      "completed $commandx $status in $elapsed seconds" \
       -i utilities-terminal -t 50
 
     if [ "$SOUND" -eq 1 ]; then
