@@ -10,6 +10,12 @@ Notify when a terminal task is done
 
 Install dependencies first :
 
+- For Mac OS -
+
+    brew install terminal-notifier
+
+- For Ubuntu -
+
     sudo apt-get install notify-osd pulseaudio-utils libnotify-bin
 
 **Note:** The above dependencies are generally installed on most systems.

@@ -44,9 +44,19 @@ notif_timer() {
   fi
 
   if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
-    notify-send "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
-      "completed $commandx $status in $elapsed seconds" \
-      -i utilities-terminal -t 50
+    if [ "$(uname -s)" = "Darwin" ]; then
+      # Use terminal-notifier for Mac OS
+      terminal-notifier -title "NotiFyre"\
+        -subtitle "Command : $commandx"\
+        -message "Completed $status in $elapsed seconds"\
+        -timeout 5\
+        -closeLabel "Gotcha!"
+    else
+      # Use notify-send for others
+      notify-send "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
+        "completed $commandx $status in $elapsed seconds" \
+        -i utilities-terminal -t 50
+    fi
 
     if [ "$SOUND" -eq 1 ]; then
       if [ "$elapsed" -gt "$SOUND_MIN" ]; then
@@ -58,7 +68,7 @@ notif_timer() {
 
 # needs .bash-preexec.sh
 # if you wish not to get notified for all processes, comment the line
-# source ~/.bash-preexec.sh # as close to the end as posisble in bashrc
+# source ~/.bash-preexec.sh # as close to the end as possible in ~/.bashrc
 
 preexec() {
   commandx="$1"
