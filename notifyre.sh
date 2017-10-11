@@ -38,24 +38,25 @@ notif_timer() {
   elapsed=$((end - start))
 
   if [[ "$RETVAL" -ne 0 ]]; then
-    status="successfully"
+    command_status="\u274c"
   else
-    status="unsuccessfully"
+    command_status="\u2705"
   fi
 
   if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
     if [ "$(uname -s)" = "Darwin" ]; then
       # Use terminal-notifier for Mac OS
-      terminal-notifier -title "NotiFyre"\
+      terminal-notifier -title "NotiFyre $(echo $command_status)"\
         -subtitle "Command : $commandx"\
-        -message "Completed $status in $elapsed seconds"\
+        -message "Completed in $elapsed seconds"\
         -timeout 5\
         -closeLabel "Gotcha!"
     else
       # Use notify-send for others
-      notify-send "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
-        "completed $commandx $status in $elapsed seconds" \
-        -i utilities-terminal -t 50
+      notify-send "NotiFyre $(echo $command_status)" "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
+        "completed $commandx in $elapsed seconds" \
+        -i utilities-terminal
+        -t 50
     fi
 
     if [ "$SOUND" -eq 1 ]; then
