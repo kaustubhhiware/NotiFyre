@@ -94,7 +94,9 @@ There are four configurable options in NotiFyre:
     **Options:** Path to a sound file 
 
     **Utility:** The sound file will be played whenever `SOUND=1`
-    and a command has taken more time than `SOUND_MIN` seconds
+    and a command has taken more time than `SOUND_MIN` seconds. If the sound
+    file does not exist, it plays an audible-bell sound (varies by terminal)
+    as a fallback.
 
 4. `MIN_INTERVAL`
 
