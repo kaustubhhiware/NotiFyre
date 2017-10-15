@@ -43,25 +43,27 @@ notif_timer() {
     command_status="\u2705"
   fi
 
-  if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
-    if [ "$(uname -s)" = "Darwin" ]; then
+  if [ "$(uname -s)" = "Darwin" ]; then
+    if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
       # Use terminal-notifier for Mac OS
       terminal-notifier -title "NotiFyre $(echo $command_status)"\
         -subtitle "Command : $commandx"\
         -message "Completed in $elapsed seconds"\
         -timeout 5\
         -closeLabel "Gotcha!"
-    else
+    fi
+  else
+    if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
       # Use notify-send for others
       notify-send "NotiFyre $(echo $command_status)" "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
         "completed $commandx in $elapsed seconds" \
         -i utilities-terminal
         -t 50
-    fi
 
-    if [ "$SOUND" -eq 1 ]; then
-      if [ "$elapsed" -gt "$SOUND_MIN" ]; then
-        paplay $ALERT
+      if [ "$SOUND" -eq 1 ]; then
+        if [ "$elapsed" -gt "$SOUND_MIN" ]; then
+          paplay $ALERT
+        fi
       fi
     fi
   fi
