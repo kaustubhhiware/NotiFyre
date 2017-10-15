@@ -46,23 +46,21 @@ notif_timer() {
   if [ "$elapsed" -gt "$MIN_INTERVAL" ]; then
     if [ "$(uname -s)" = "Darwin" ]; then
       # Use terminal-notifier for Mac OS
-      terminal-notifier -title "NotiFyre $(echo $command_status)"\
-        -subtitle "Command : $commandx"\
-        -message "Completed in $elapsed seconds"\
-        -timeout 5\
+      terminal-notifier -title "NotiFyre $(echo $command_status)" \
+        -subtitle "Command : $commandx" \
+        -message "Completed in $elapsed seconds" \
+        -timeout 5 \
         -closeLabel "Gotcha!"
     else
       # Use notify-send for others
-      notify-send "NotiFyre $(echo $command_status)" "Terminal in ${p[-2]}/${p[-1]} and exit $? \$" \
-        "completed $commandx in $elapsed seconds" \
-        -i utilities-terminal
-        -t 50
+      notify-send "NotiFyre $(echo -e $command_status)" \
+        "Terminal in ${p[-2]}/${p[-1]}\nCompleted $commandx in $elapsed seconds" \
+        -i utilities-terminal \
+        -t 5000
     fi
 
-    if [ "$SOUND" -eq 1 ]; then
-      if [ "$elapsed" -gt "$SOUND_MIN" ]; then
-        paplay $ALERT
-      fi
+    if [ "$SOUND" -eq 1 ] && [ "$elapsed" -gt "$SOUND_MIN" ]; then
+        paplay $ALERT &> /dev/null || echo -en "\a";
     fi
   fi
 }
