@@ -28,6 +28,12 @@ notif_timer() {
     start=$(date +%s)
   fi
 
+  i="$IFS";IFS='/'
+  set -f
+  p=($PWD)
+  set +f
+  IFS="$i"
+
   end=$(date +%s)
   elapsed=$((end - start))
 
@@ -48,7 +54,7 @@ notif_timer() {
     else
       # Use notify-send for others
       notify-send "NotiFyre $(echo -e $command_status)" \
-        "Completed $commandx in $elapsed seconds" \
+        "Terminal in ${p[-2]}/${p[-1]}\nCompleted $commandx in $elapsed seconds" \
         -i utilities-terminal \
         -t 5000
     fi
