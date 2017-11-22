@@ -9,9 +9,9 @@ function notifyre -d 'daemon function to provide notifications'
     set -x ring_timeout 2
     set -x ALERT /usr/share/sounds/ubuntu/notifications/Slick.ogg
     set -x ICON utilities-terminal
-    if test $status # if last process did not exit properly, show error image
-      set ICON dialog-error
-    end
+    # if test $status # if last process did not exit properly, show error image
+    #  set ICON dialog-error
+    # end
 
     if test $CMD_DURATION
         if test $CMD_DURATION -gt (math "1000 * $timeout") # time set for notification
