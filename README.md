@@ -1,5 +1,5 @@
 # NotiFyre
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php) [![Bash Shell](https://badges.frapsoft.com/bash/v1/bash.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php) [![Bash Shell](https://badges.frapsoft.com/bash/v1/bash.png?v=103)](https://github.com/ellerbrock/open-source-badges/) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields)](http://makeapullrequest.com)
 
 It's lit :fire:
 
@@ -63,13 +63,13 @@ Notifyre has been tested on a fresh install of Ubuntu 16.04 running bash, zsh or
 
     **Note:** These 2 lines should be added as close to the end of the file as possible.
 
-* If you do not want to be notified for each command, then add this to the end of your rc file:
+* If you do not want to be notified for each command, then add only this to the end of your rc file:
 
     ```sh
     source ~/notifyre.sh
     ```
 
-    To get a notification for a command, you need to run it as `nf <command>`
+    To get a notification for a command in this case, you need to run it as `nf <command>`
 
 ### Configuration
  [(Back to top)](#table-of-contents)
@@ -160,8 +160,6 @@ not need to modify the `fish_prompt.fish` file.
 
 You can learn to write your own functions in fish with
 [this](https://fishshell.com/docs/current/tutorial.html) as a starting point.
-The working files can be found [in my
-dotfiles](https://github.com/kaustubhhiware/dotfiles/tree/master/fish).
 
 ### Configuration
  [(Back to top)](#table-of-contents)
@@ -184,7 +182,7 @@ dotfiles](https://github.com/kaustubhhiware/dotfiles/tree/master/fish).
 
 I had to reinstall Ubuntu quite a number of times thanks to how awesome Windows messed up my laptop. This script seeks to help anyone who multi-tasks, or does not constantly check their terminals. [ntfy](https://github.com/dschep/ntfy) wasn't consistent always, so made this.
 
-Tested on fresh install of Ubuntu 16.04, and on Arch Linux. Ubuntu 14 may require [Slick.ogg](Slick.ogg) whose path must be changed before usage.
+Tested on fresh install of Ubuntu 16.04, Arch Linux and Mac. Ubuntu 14 may require [Slick.ogg](Slick.ogg) whose path must be changed before usage.
 
 ## Contributing
 [(Back to top)](#table-of-contents)
@@ -193,7 +191,9 @@ Your contributions are always welcome :smile: ! Please have a look at the [contr
 
 Discussion Group: https://www.facebook.com/groups/552015885141292/
 
-You can use [refer.md](refer.md) for some preious work I've reffered to while making this.
+You can use [refer.md](refer.md) for some previous work I've referred to while making this.
+
+Have a suggestion? Make an issue about it.
 
 ## Debugging
 [(Back to top)](#table-of-contents)
@@ -205,9 +205,7 @@ If no message pops up, it means notify-osd has stopped working. Reinstall some d
 
     sudo apt-get --reinstall install libnotify-bin notify-osd
 
-For further customizations, visit this [link](http://ubuntuhandbook.org/index.php/2014/04/customize-on-screen-notification-ubuntu-1404/)
-
-Have a suggestion? Make an issue about it.
+For further customizations, you can use [NotifyOSD config](http://ubuntuhandbook.org/index.php/2014/04/customize-on-screen-notification-ubuntu-1404/)
 
 ## Acknowledgements
 [(Back to top)](#table-of-contents)
