@@ -232,7 +232,7 @@ For further customizations, you can use [NotifyOSD config](http://ubuntuhandbook
 
 [(Back to top)](#table-of-contents)
 
-- [Ryan Caloras](https://github.com/rcaloras) for []`bash-preexec.sh`](https://github.com/rcaloras/bash-preexec).
+- [Ryan Caloras](https://github.com/rcaloras) for [`bash-preexec.sh`](https://github.com/rcaloras/bash-preexec).
 
 ## License
 
